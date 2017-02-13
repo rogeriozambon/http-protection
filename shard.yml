@@ -1,0 +1,9 @@
+name: http-protection
+version: 0.1.0
+
+authors:
+  - Rogério Zambon <rogeriozambon@gmail.com>
+
+crystal: 0.20.3
+
+license: MIT
