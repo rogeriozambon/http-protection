@@ -23,7 +23,7 @@ require "http-protection"
 server = HTTP::Server.new("0.0.0.0", 8080, [
   HTTP::Protection::IpSpoofing.new,
   HTTP::Protection::RemoteReferrer.new,
-  HTTP::Protection::XSSFilter.new
+  HTTP::Protection::XSSHeader.new
 ])
 
 server.listen
