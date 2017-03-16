@@ -80,7 +80,7 @@ preload | Allow this domain to be included in browsers HSTS preload list. | fals
 
 ```crystal
 HTTP::Protection::StrictTransport.new(
-  max_age: 31536000
+  max_age: 31536000,
   include_subdomains: false,
   preload: false
 )
