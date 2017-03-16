@@ -1,4 +1,5 @@
 require "spec"
+require "timecop"
 require "../src/http-protection"
 
 def context_for_tests : HTTP::Server::Context
