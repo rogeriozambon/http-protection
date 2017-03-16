@@ -25,20 +25,11 @@ server = HTTP::Server.new("0.0.0.0", 8080, [
   HTTP::Protection::IpSpoofing.new,
   HTTP::Protection::PathTraversal.new,
   HTTP::Protection::RemoteReferrer.new,
+  HTTP::Protection::StrictTransport.new,
   HTTP::Protection::XSSHeader.new
 ])
 
 server.listen
-```
-
-### RemoteReferrer middleware
-
-You can define the HTTP methods that are allowed. It does not accept unsafe HTTP requests if the Referer header is set to a different host.
-
-**Example:**
-
-```crystal
-HTTP::Protection::RemoteReferrer.new(methods: %w[GET])
 ```
 
 ### Deflect middleware
@@ -62,6 +53,36 @@ HTTP::Protection::Deflect.new(
   threshold: 10,
   blacklist: ["111.111.111.111"],
   whitelist: ["222.222.222.222"]
+)
+```
+
+### RemoteReferrer middleware
+
+You can define the HTTP methods that are allowed. It does not accept unsafe HTTP requests if the Referer header is set to a different host.
+
+**Example:**
+
+```crystal
+HTTP::Protection::RemoteReferrer.new(methods: %w[GET])
+```
+
+### StrictTransport middleware
+
+You can define some options for this middleware. It protects against protocol downgrade attacks and cookie hijacking.
+
+Option | Description | Default value | Type
+------ | ----------- | ------------- | ----
+max_age | How long future requests to the domain should go over HTTPS (in seconds). | 31536000 | Int32
+include_subdomains | If all present and future subdomains will be HTTPS. | false | Bool
+preload | Allow this domain to be included in browsers HSTS preload list. | false | Bool
+
+**Example:**
+
+```crystal
+HTTP::Protection::StrictTransport.new(
+  max_age: 31536000
+  include_subdomains: false,
+  preload: false
 )
 ```
 
