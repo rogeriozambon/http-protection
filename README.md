@@ -31,7 +31,7 @@ server = HTTP::Server.new("0.0.0.0", 8080, [
 server.listen
 ```
 
-#### RemoteReferrer middleware
+### RemoteReferrer middleware
 
 You can define the HTTP methods that are allowed. It does not accept unsafe HTTP requests if the Referer header is set to a different host.
 
@@ -41,12 +41,12 @@ You can define the HTTP methods that are allowed. It does not accept unsafe HTTP
 HTTP::Protection::RemoteReferrer.new(methods: %w[GET])
 ```
 
-#### Deflect middleware
+### Deflect middleware
 
 You can define a several options for this middleware. It protecting against Denial-of-service attacks.
 
 Option | Description | Default value | Type
---- | --- | --- | --- | ---
+------ | ----------- | ------------- | ----
 interval | Duration in seconds until the request counter is reset. | 5 | Int32
 duration | Duration in seconds that a remote address will be blocked. | 900 | Int32
 threshold | Number of requests allowed. | 100 | Int32
