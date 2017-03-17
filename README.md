@@ -35,7 +35,7 @@ server.listen
 
 ### Deflect middleware
 
-You can define a several options for this middleware. It protecting against Denial-of-service attacks.
+You can define a several options for this middleware. It protects against Denial-of-service attacks.
 
 Option | Description | Default value | Type
 ------ | ----------- | ------------- | ----
@@ -59,7 +59,7 @@ HTTP::Protection::Deflect.new(
 
 ### FrameOptions middleware
 
-You can define one option for this middleware. It protecting against clickjacking, setting header to tell the browser avoid embedding the page in a frame.
+You can define one option for this middleware. It protects against clickjacking, setting header to tell the browser avoid embedding the page in a frame.
 
 Option | Description | Default value | Type
 ------ | ----------- | ------------- | ----
