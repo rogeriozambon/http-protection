@@ -1,6 +1,7 @@
 # http-protection
 
 [![Build Status](https://travis-ci.org/rogeriozambon/http-protection.svg?branch=master)](https://travis-ci.org/rogeriozambon/http-protection)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/rogeriozambon/http-protection/master/LICENSE)
 
 This library protects against typical web attacks. It was inspired in rack-protection Ruby gem.
 
