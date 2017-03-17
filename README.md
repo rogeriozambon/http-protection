@@ -33,11 +33,6 @@ server = HTTP::Server.new("0.0.0.0", 8080, [
 server.listen
 ```
 
-## TODO
-
-- [ ] Change README to include a description for each middleware.
-- [ ] Add documentation for all middlewares.
-
 ### Deflect middleware
 
 You can define a several options for this middleware. It protecting against Denial-of-service attacks.
@@ -105,6 +100,11 @@ HTTP::Protection::StrictTransport.new(
   preload: false
 )
 ```
+
+## TODO
+
+- [ ] Change README to include a description for each middleware.
+- [ ] Add documentation for all middlewares.
 
 ## Contributing
 
