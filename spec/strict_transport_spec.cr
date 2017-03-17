@@ -3,6 +3,11 @@ require "./spec_helper"
 describe HTTP::Protection::StrictTransport do
   context = context_for_tests
 
+  Spec.before_each do
+    context.request.headers.clear
+    context.response.headers.clear
+  end
+
   it "should set the Strict-Transport-Security header" do
     middleware = HTTP::Protection::StrictTransport.new
     middleware.call(context)

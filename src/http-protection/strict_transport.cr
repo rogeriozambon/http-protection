@@ -8,7 +8,7 @@ module HTTP::Protection
     end
 
     def call(context)
-      context.response.headers["Strict-Transport-Security"] = strict_transport
+      context.response.headers["Strict-Transport-Security"] ||= strict_transport
       call_next(context)
     end
 

@@ -22,6 +22,7 @@ require "http-protection"
 
 server = HTTP::Server.new("0.0.0.0", 8080, [
   HTTP::Protection::Deflect.new,
+  HTTP::Protection::FrameOptions.new,
   HTTP::Protection::IpSpoofing.new,
   HTTP::Protection::PathTraversal.new,
   HTTP::Protection::RemoteReferrer.new,
@@ -54,6 +55,20 @@ HTTP::Protection::Deflect.new(
   blacklist: ["111.111.111.111"],
   whitelist: ["222.222.222.222"]
 )
+```
+
+### FrameOptions middleware
+
+You can define one option for this middleware. It protecting against clickjacking, setting header to tell the browser avoid embedding the page in a frame.
+
+Option | Description | Default value | Type
+------ | ----------- | ------------- | ----
+option | Defines who should be allowed to embed the page in a frame. Use "DENY" or "SAMEORIGIN". | SAMEORIGIN | String
+
+**Example:**
+
+```crystal
+HTTP::Protection::FrameOptions.new(option: "SAMEORIGIN")
 ```
 
 ### RemoteReferrer middleware
