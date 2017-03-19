@@ -1,5 +1,18 @@
 require "http/server"
 
+##
+# Middleware sets X-XSS-Protection header to tell the browser to block attacks.
+# http://blogs.msdn.com/b/ie/archive/2008/07/01/ie8-security-part-iv-the-xss-filter.aspx
+#
+# === Options:
+#
+#   :xss_mode  How the browser should prevent the attack. Defaults to "block"
+#   :nosniff   Blocks a request if the requested type is "style" or "script". Defaults to true
+#
+# === Examples:
+#
+#  HTTP::Protection::XSSHeader.new(xss_mode: "block" nosniff: true)
+#
 module HTTP::Protection
   class XSSHeader
     include HTTP::Handler

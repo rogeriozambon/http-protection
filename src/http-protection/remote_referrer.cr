@@ -1,10 +1,22 @@
 require "http/server"
 
+##
+# Middleware for protecting against unsafe HTTP requests if the Referer header is set to a different host.
+# http://en.wikipedia.org/wiki/Cross-site_request_forgery
+#
+# === Options:
+#
+#   :methods  Defines which HTTP method should be used. Defaults to GET, HEAD, OPTIONS, TRACE
+#
+# === Examples:
+#
+#  HTTP::Protection::RemoteReferrer.new(methods: ["GET"])
+#
 module HTTP::Protection
   class RemoteReferrer
     include HTTP::Handler
 
-    def initialize(@methods = %w[GET HEAD OPTIONS TRACE])
+    def initialize(@methods : Array(String) = ["GET", "HEAD", "OPTIONS", "TRACE"])
     end
 
     def call(context)

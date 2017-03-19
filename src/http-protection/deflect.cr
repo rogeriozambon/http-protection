@@ -1,6 +1,22 @@
-require "logger"
 require "http/server"
+require "logger"
 
+##
+# Middleware for protecting against Denial-of-service attacks.
+# http://en.wikipedia.org/wiki/Denial-of-service_attack.
+#
+# === Options:
+#
+#   :interval   Duration in seconds until the request counter is reset. Defaults to 5
+#   :duration   Duration in seconds that a remote address will be blocked. Defaults to 900 (15 minutes)
+#   :threshold  Number of requests allowed. Defaults to 100
+#   :blacklist  Array of remote addresses immediately considered malicious.
+#   :whitelist  Array of remote addresses which bypass Deflect.
+#
+# === Examples:
+#
+#  HTTP::Protection::Deflect.new(interval: 5, duration: 5, threshold: 10, blacklist: ["111.111.111.111"], whitelist: ["222.222.222.222"])
+#
 module HTTP::Protection
   class Deflect
     include HTTP::Handler

@@ -1,5 +1,13 @@
 require "http/server"
 
+##
+# Middleware for protecting against unauthorized access to file system attacks, unescapes '/' and '.' from PATH_INFO.
+# http://en.wikipedia.org/wiki/Directory_traversal.
+#
+# === Examples:
+#
+#  HTTP::Protection::PathTraversal.new
+#
 module HTTP::Protection
   class PathTraversal
     include HTTP::Handler

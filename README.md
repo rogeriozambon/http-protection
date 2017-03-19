@@ -84,7 +84,7 @@ HTTP::Protection::IpSpoofing.new
 
 ### PathTraversal middleware
 
-It protects against to unauthorized access to file system attacks, unescapes '/' and '.' from PATH_INFO.
+It protects against unauthorized access to file system attacks, unescapes '/' and '.' from PATH_INFO.
 
 **Example:**
 
@@ -94,12 +94,16 @@ HTTP::Protection::PathTraversal.new
 
 ### RemoteReferrer middleware
 
-It does not accept unsafe HTTP requests if the Referer header is set to a different host. You can define the HTTP methods that are allowed.
+It doesn't accept unsafe HTTP requests if the Referer header is set to a different host. You can define the HTTP methods that are allowed.
+
+Option | Description | Default value | Type
+------ | ----------- | ------------- | ----
+methods | Defines which HTTP method should be used. | GET, HEAD, OPTIONS, TRACE | Array(String)
 
 **Example:**
 
 ```crystal
-HTTP::Protection::RemoteReferrer.new(methods: %w[GET])
+HTTP::Protection::RemoteReferrer.new(methods: ["GET"])
 ```
 
 ### StrictTransport middleware

@@ -1,5 +1,19 @@
 require "http/server"
 
+##
+# Middleware for protecting against protocol downgrade attacks and cookie hijacking.
+# https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security
+#
+# === Options:
+#
+#   :max_age             How long future requests to the domain should go over HTTPS (in seconds). Defaults to 31536000
+#   :include_subdomains  If all present and future subdomains will be HTTPS. Defaults to false
+#   :preload             Allow this domain to be included in browsers HSTS preload list. Defaults to false
+#
+# === Examples:
+#
+#  HTTP::Protection::StrictTransport.new(max_age: 31536000, include_subdomains: false, preload: false)
+#
 module HTTP::Protection
   class StrictTransport
     include HTTP::Handler
