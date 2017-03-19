@@ -149,7 +149,7 @@ HTTP::Protection::XSSHeader.new(
 ## TODO
 
 - [x] Change README to include a description for each middleware.
-- [ ] Add documentation for all middlewares.
+- [x] Add documentation for all middlewares.
 
 ## Contributing
 
