@@ -36,7 +36,7 @@ server.listen
 
 ### Deflect middleware
 
-You can define a several options for this middleware. It protects against Denial-of-service attacks.
+It protects against Denial-of-service attacks. You can define a several options for this middleware.
 
 Option | Description | Default value | Type
 ------ | ----------- | ------------- | ----
@@ -60,7 +60,7 @@ HTTP::Protection::Deflect.new(
 
 ### FrameOptions middleware
 
-You can define one option for this middleware. It protects against clickjacking, setting header to tell the browser avoid embedding the page in a frame.
+It protects against clickjacking, setting header to tell the browser avoid embedding the page in a frame. You can define one option for this middleware.
 
 Option | Description | Default value | Type
 ------ | ----------- | ------------- | ----
@@ -72,9 +72,29 @@ option | Defines who should be allowed to embed the page in a frame. Use "DENY" 
 HTTP::Protection::FrameOptions.new(option: "SAMEORIGIN")
 ```
 
+### IpSpoofing middleware
+
+It detects IP spoofing attacks.
+
+**Example:**
+
+```crystal
+HTTP::Protection::IpSpoofing.new
+```
+
+### PathTraversal middleware
+
+It protects against to unauthorized access to file system attacks, unescapes '/' and '.' from PATH_INFO.
+
+**Example:**
+
+```crystal
+HTTP::Protection::PathTraversal.new
+```
+
 ### RemoteReferrer middleware
 
-You can define the HTTP methods that are allowed. It does not accept unsafe HTTP requests if the Referer header is set to a different host.
+It does not accept unsafe HTTP requests if the Referer header is set to a different host. You can define the HTTP methods that are allowed.
 
 **Example:**
 
@@ -102,9 +122,19 @@ HTTP::Protection::StrictTransport.new(
 )
 ```
 
+### XSSHeader middleware
+
+It sets X-XSS-Protection header to tell the browser to block attacks. XSS vulnerabilities enable an attacker to control the relationship between a user and a web site or web application that they trust.
+
+**Example:**
+
+```crystal
+HTTP::Protection::XSSHeader.new
+```
+
 ## TODO
 
-- [ ] Change README to include a description for each middleware.
+- [x] Change README to include a description for each middleware.
 - [ ] Add documentation for all middlewares.
 
 ## Contributing
