@@ -1,5 +1,3 @@
-require "http/server"
-
 ##
 # Middleware for protecting against unsafe HTTP requests if the Referer header is set to a different host.
 # http://en.wikipedia.org/wiki/Cross-site_request_forgery
@@ -13,7 +11,7 @@ require "http/server"
 #  HTTP::Protection::RemoteReferrer.new(methods: ["GET"])
 #
 module HTTP::Protection
-  class RemoteReferrer
+  class RemoteReferrer < Base
     include HTTP::Handler
 
     def initialize(@methods : Array(String) = ["GET", "HEAD", "OPTIONS", "TRACE"])
@@ -24,10 +22,9 @@ module HTTP::Protection
 
       return call_next(context) unless headers.has_key?("HTTP_REFERER")
 
-      method = headers["REQUEST_METHOD"]
       referrer = headers["HTTP_REFERER"]
 
-      return false unless referrer.empty? || @methods.includes?(method)
+      return false unless referrer.empty? || safe?(context)
       return false unless URI.parse(referrer).host == context.request.host
 
       call_next(context)

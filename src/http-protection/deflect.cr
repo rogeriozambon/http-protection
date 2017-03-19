@@ -1,6 +1,3 @@
-require "http/server"
-require "logger"
-
 ##
 # Middleware for protecting against Denial-of-service attacks.
 # http://en.wikipedia.org/wiki/Denial-of-service_attack.

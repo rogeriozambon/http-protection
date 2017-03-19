@@ -1,5 +1,3 @@
-require "http/server"
-
 ##
 # Middleware sets X-XSS-Protection header to tell the browser to block attacks.
 # http://blogs.msdn.com/b/ie/archive/2008/07/01/ie8-security-part-iv-the-xss-filter.aspx
@@ -14,19 +12,17 @@ require "http/server"
 #  HTTP::Protection::XSSHeader.new(xss_mode: "block" nosniff: true)
 #
 module HTTP::Protection
-  class XSSHeader
+  class XSSHeader < Base
     include HTTP::Handler
 
     def initialize(@xss_mode : String = "block", @nosniff : Bool = true)
     end
 
     def call(context)
-      content_type = context.request.headers["Content-Type"]
-
       xss_value = context.request.headers["X-XSS-Protection"] rescue nil
       content_options = context.request.headers["X-Content-Type-Options"] rescue nil
 
-      if allowed_types.includes?(content_type)
+      if html?(context)
         xss_value ||= "1; mode=#{@xss_mode}"
       end
 
@@ -36,15 +32,6 @@ module HTTP::Protection
 
       context.response.headers["X-XSS-Protection"] = xss_value if xss_value
       context.response.headers["X-Content-Type-Options"] = content_options if content_options
-    end
-
-    private def allowed_types
-      [
-        "text/html",
-        "text/html;charset=utf-8",
-        "application/xhtml",
-        "application/xhtml+xml"
-      ]
     end
   end
 end

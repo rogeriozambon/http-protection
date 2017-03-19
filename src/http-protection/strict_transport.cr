@@ -1,5 +1,3 @@
-require "http/server"
-
 ##
 # Middleware for protecting against protocol downgrade attacks and cookie hijacking.
 # https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security

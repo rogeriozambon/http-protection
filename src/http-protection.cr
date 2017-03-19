@@ -1,4 +1,3 @@
+require "logger"
+require "http/server"
 require "./http-protection/*"
-
-module HTTP::Protection
-end

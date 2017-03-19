@@ -1,5 +1,3 @@
-require "http/server"
-
 ##
 # Middleware for detecting IP spoofing attacks.
 # http://blog.c22.cc/2011/04/22/surveymonkey-ip-spoofing.

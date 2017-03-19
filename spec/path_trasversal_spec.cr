@@ -7,8 +7,8 @@ describe HTTP::Protection::PathTraversal do
   Spec.before_each { context.request.headers.clear }
 
   it "does not touch /foo/bar" do
-    context.request.headers["Content-Type"] = "text/plain"
-    context.request.headers["PATH_INFO"] = "/foo/bar"
+    context.request.headers.add("Content-Type", "text/plain")
+    context.request.headers.add("PATH_INFO", "/foo/bar")
 
     middleware.call(context)
 
@@ -16,8 +16,8 @@ describe HTTP::Protection::PathTraversal do
   end
 
   it "does not touch /foo/bar/" do
-    context.request.headers["Content-Type"] = "text/plain"
-    context.request.headers["PATH_INFO"] = "/foo/bar/"
+    context.request.headers.add("Content-Type", "text/plain")
+    context.request.headers.add("PATH_INFO", "/foo/bar/")
 
     middleware.call(context)
 
@@ -25,8 +25,8 @@ describe HTTP::Protection::PathTraversal do
   end
 
   it "does not touch /" do
-    context.request.headers["Content-Type"] = "text/plain"
-    context.request.headers["PATH_INFO"] = "/"
+    context.request.headers.add("Content-Type", "text/plain")
+    context.request.headers.add("PATH_INFO", "/")
 
     middleware.call(context)
 
@@ -34,8 +34,8 @@ describe HTTP::Protection::PathTraversal do
   end
 
   it "does not touch /.f" do
-    context.request.headers["Content-Type"] = "text/plain"
-    context.request.headers["PATH_INFO"] = "/.f"
+    context.request.headers.add("Content-Type", "text/plain")
+    context.request.headers.add("PATH_INFO", "/.f")
 
     middleware.call(context)
 
@@ -43,8 +43,8 @@ describe HTTP::Protection::PathTraversal do
   end
 
   it "does not touch /a.x" do
-    context.request.headers["Content-Type"] = "text/plain"
-    context.request.headers["PATH_INFO"] = "/a.x"
+    context.request.headers.add("Content-Type", "text/plain")
+    context.request.headers.add("PATH_INFO", "/a.x")
 
     middleware.call(context)
 
@@ -52,8 +52,8 @@ describe HTTP::Protection::PathTraversal do
   end
 
   it "replaces /.. with /" do
-    context.request.headers["Content-Type"] = "text/plain"
-    context.request.headers["PATH_INFO"] = "/.."
+    context.request.headers.add("Content-Type", "text/plain")
+    context.request.headers.add("PATH_INFO", "/..")
 
     middleware.call(context)
 
@@ -61,8 +61,8 @@ describe HTTP::Protection::PathTraversal do
   end
 
   it "replaces /a/../b with /b" do
-    context.request.headers["Content-Type"] = "text/plain"
-    context.request.headers["PATH_INFO"] = "/a/../b"
+    context.request.headers.add("Content-Type", "text/plain")
+    context.request.headers.add("PATH_INFO", "/a/../b")
 
     middleware.call(context)
 
@@ -70,8 +70,8 @@ describe HTTP::Protection::PathTraversal do
   end
 
   it "replaces /a/../b/ with /b/" do
-    context.request.headers["Content-Type"] = "text/plain"
-    context.request.headers["PATH_INFO"] = "/a/../b/"
+    context.request.headers.add("Content-Type", "text/plain")
+    context.request.headers.add("PATH_INFO", "/a/../b/")
 
     middleware.call(context)
 
@@ -79,8 +79,8 @@ describe HTTP::Protection::PathTraversal do
   end
 
   it "replaces /a/. with /a/" do
-    context.request.headers["Content-Type"] = "text/plain"
-    context.request.headers["PATH_INFO"] = "/a/."
+    context.request.headers.add("Content-Type", "text/plain")
+    context.request.headers.add("PATH_INFO", "/a/.")
 
     middleware.call(context)
 
@@ -88,8 +88,8 @@ describe HTTP::Protection::PathTraversal do
   end
 
   it "replaces /%2e. with /" do
-    context.request.headers["Content-Type"] = "text/plain"
-    context.request.headers["PATH_INFO"] = "/%2e."
+    context.request.headers.add("Content-Type", "text/plain")
+    context.request.headers.add("PATH_INFO", "/%2e.")
 
     middleware.call(context)
 
@@ -97,8 +97,8 @@ describe HTTP::Protection::PathTraversal do
   end
 
   it "replaces /a/%2E%2e/b with /b" do
-    context.request.headers["Content-Type"] = "text/plain"
-    context.request.headers["PATH_INFO"] = "/a/%2E%2e/b"
+    context.request.headers.add("Content-Type", "text/plain")
+    context.request.headers.add("PATH_INFO", "/a/%2E%2e/b")
 
     middleware.call(context)
 
@@ -106,8 +106,8 @@ describe HTTP::Protection::PathTraversal do
   end
 
   it "replaces /a%2f%2E%2e%2Fb/ with /b/" do
-    context.request.headers["Content-Type"] = "text/plain"
-    context.request.headers["PATH_INFO"] = "/a%2f%2E%2e%2Fb/"
+    context.request.headers.add("Content-Type", "text/plain")
+    context.request.headers.add("PATH_INFO", "/a%2f%2E%2e%2Fb/")
 
     middleware.call(context)
 
@@ -115,8 +115,8 @@ describe HTTP::Protection::PathTraversal do
   end
 
   it "replaces // with /" do
-    context.request.headers["Content-Type"] = "text/plain"
-    context.request.headers["PATH_INFO"] = "//"
+    context.request.headers.add("Content-Type", "text/plain")
+    context.request.headers.add("PATH_INFO", "//")
 
     middleware.call(context)
 
@@ -124,8 +124,8 @@ describe HTTP::Protection::PathTraversal do
   end
 
   it "replaces /%2fetc%2Fpasswd with /etc/passwd" do
-    context.request.headers["Content-Type"] = "text/plain"
-    context.request.headers["PATH_INFO"] = "/%2fetc%2Fpasswd"
+    context.request.headers.add("Content-Type", "text/plain")
+    context.request.headers.add("PATH_INFO", "/%2fetc%2Fpasswd")
 
     middleware.call(context)
 
