@@ -25,6 +25,7 @@ server = HTTP::Server.new("0.0.0.0", 8080, [
   HTTP::Protection::Deflect.new,
   HTTP::Protection::FrameOptions.new,
   HTTP::Protection::IpSpoofing.new,
+  HTTP::Protection::Origin.new,
   HTTP::Protection::PathTraversal.new,
   HTTP::Protection::RemoteReferrer.new,
   HTTP::Protection::StrictTransport.new,
@@ -80,6 +81,20 @@ It detects IP spoofing attacks.
 
 ```crystal
 HTTP::Protection::IpSpoofing.new
+```
+
+### Origin middleware
+
+It protects against unsafe HTTP requests when value of Origin HTTP request header doesn't match default or whitelisted URIs. You can define the whitelist of URIs.
+
+Option | Description | Default value | Type
+------ | ----------- | ------------- | ----
+whitelist | Array of allowed URIs | [] | Array(String)
+
+**Example:**
+
+```crystal
+HTTP::Protection::Origin.new(whitelist: ["http://friend.com"])
 ```
 
 ### PathTraversal middleware
