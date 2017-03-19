@@ -104,7 +104,7 @@ HTTP::Protection::RemoteReferrer.new(methods: %w[GET])
 
 ### StrictTransport middleware
 
-You can define some options for this middleware. It protects against protocol downgrade attacks and cookie hijacking.
+It protects against protocol downgrade attacks and cookie hijacking. You can define some options for this middleware.
 
 Option | Description | Default value | Type
 ------ | ----------- | ------------- | ----
@@ -126,10 +126,20 @@ HTTP::Protection::StrictTransport.new(
 
 It sets X-XSS-Protection header to tell the browser to block attacks. XSS vulnerabilities enable an attacker to control the relationship between a user and a web site or web application that they trust.
 
+You can define some options for this middleware.
+
+Option | Description | Default value | Type
+------ | ----------- | ------------- | ----
+xss_mode | How the browser should prevent the attack. | block | String
+nosniff | Blocks a request if the requested type is "style" or "script". | true | Bool
+
 **Example:**
 
 ```crystal
-HTTP::Protection::XSSHeader.new
+HTTP::Protection::XSSHeader.new(
+  xss_mode: "block"
+  nosniff: true
+)
 ```
 
 ## TODO

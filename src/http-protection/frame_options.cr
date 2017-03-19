@@ -13,9 +13,18 @@ module HTTP::Protection
     end
 
     private def html?(context)
-      ["text/html", "application/xhtml"].includes?(context.request.headers["Content-Type"])
+      allowed_types.includes?(context.request.headers["Content-Type"])
     rescue
       false
+    end
+
+    private def allowed_types
+      [
+        "text/html",
+        "text/html;charset=utf-8",
+        "application/xhtml",
+        "application/xhtml+xml"
+      ]
     end
   end
 end
