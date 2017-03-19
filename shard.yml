@@ -4,7 +4,7 @@ version: 0.1.0
 authors:
   - Rogério Zambon <rogeriozambon@gmail.com>
 
-crystal: 0.20.3
+crystal: 0.21.1
 
 license: MIT
 
