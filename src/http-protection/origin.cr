@@ -16,19 +16,17 @@ module HTTP::Protection
     include HTTP::Handler
 
     DEFAULT_PORTS = {
-      "http" => 80,
-      "https" => 443
+      "http"  => 80,
+      "https" => 443,
     }
 
     def initialize(@whitelist : Array(String) = [] of String)
-      @logger = Logger.new(STDOUT)
-      @logger.level = Logger::WARN
     end
 
     def call(context)
       return call_next(context) if accepts?(context)
 
-      @logger.warn("origin '#{origin(context)}' unauthorized ")
+      logger.warn("origin '#{origin(context)}' unauthorized ")
 
       context.response.headers["Content-Type"] = "text/plain"
       context.response.headers["Content-Length"] = "0"

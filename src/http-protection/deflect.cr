@@ -15,7 +15,7 @@
 #  HTTP::Protection::Deflect.new(interval: 5, duration: 5, threshold: 10, blacklist: ["111.111.111.111"], whitelist: ["222.222.222.222"])
 #
 module HTTP::Protection
-  class Deflect
+  class Deflect < Base
     include HTTP::Handler
 
     def initialize(@interval : Int32 = 5, @duration : Int32 = 900, @threshold : Int32 = 100, @blacklist : Array(String) = [] of String, @whitelist : Array(String) = [] of String)
@@ -23,9 +23,6 @@ module HTTP::Protection
 
       @mapper = {} of String => Hash(String, Int32 | Int64)
       @remote = ""
-
-      @logger = Logger.new(STDOUT)
-      @logger.level = Logger::WARN
     end
 
     def call(context)
@@ -48,8 +45,8 @@ module HTTP::Protection
 
     private def map
       @mapper[@remote] ||= {
-        "expires" => Time.epoch(Time.now.epoch + @interval).epoch_ms,
-        "requests" => 0
+        "expires"  => Time.epoch(Time.now.epoch + @interval).epoch_ms,
+        "requests" => 0,
       }
     end
 
@@ -76,7 +73,7 @@ module HTTP::Protection
 
       map["block_expires"] = Time.epoch(Time.now.epoch + @duration).epoch_ms
 
-      @logger.warn("#{@remote} blocked")
+      logger.warn("#{@remote} blocked")
     end
 
     private def clear!
@@ -84,7 +81,7 @@ module HTTP::Protection
 
       @mapper.delete(@remote)
 
-      @logger.warn("#{@remote} released") if blocked?
+      logger.warn("#{@remote} released") if blocked?
     end
 
     private def blocked?
