@@ -161,6 +161,18 @@ HTTP::Protection::XSSHeader.new(
 )
 ```
 
+### Custom logger
+
+It's possible to add a custom logger to replace the default behavior. You can add a logger that outputs to a file, for example.
+
+**Example:**
+
+```crystal
+log_file = File.open("./protection.log", "w")
+custom_logger = Logger.new(log_file)
+HTTP::Protection::Logger.instance = custom_logger
+```
+
 ## TODO
 
 - [x] Change README to include a description for each middleware.
