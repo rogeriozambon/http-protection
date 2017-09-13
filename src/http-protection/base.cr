@@ -1,11 +1,15 @@
 module HTTP::Protection
   class Base
+    def logger
+      Logger.instance
+    end
+
     def html?(context)
       content_types = [
         "text/html",
         "text/html;charset=utf-8",
         "application/xhtml",
-        "application/xhtml+xml"
+        "application/xhtml+xml",
       ]
 
       content_types.includes?(context.request.headers["Content-Type"])
@@ -23,7 +27,7 @@ module HTTP::Protection
         "GET",
         "HEAD",
         "OPTIONS",
-        "TRACE"
+        "TRACE",
       ]
 
       methods.includes?(context.request.headers["REQUEST_METHOD"])
