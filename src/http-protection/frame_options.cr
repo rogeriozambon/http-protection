@@ -11,7 +11,8 @@
 #  HTTP::Protection::FrameOptions.new(option: "SAMEORIGIN")
 #
 module HTTP::Protection
-  class FrameOptions < Base
+  class FrameOptions
+    include Base
     include HTTP::Handler
 
     def initialize(@option : String = "SAMEORIGIN")

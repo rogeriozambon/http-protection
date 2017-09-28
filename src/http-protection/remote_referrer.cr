@@ -11,7 +11,8 @@
 #  HTTP::Protection::RemoteReferrer.new(methods: ["GET"])
 #
 module HTTP::Protection
-  class RemoteReferrer < Base
+  class RemoteReferrer
+    include Base
     include HTTP::Handler
 
     def initialize(@methods : Array(String) = ["GET", "HEAD", "OPTIONS", "TRACE"])

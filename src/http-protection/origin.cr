@@ -12,7 +12,8 @@
 #  HTTP::Protection::Origin.new(whitelist: ["http://friend.com"])
 #
 module HTTP::Protection
-  class Origin < Base
+  class Origin
+    include Base
     include HTTP::Handler
 
     DEFAULT_PORTS = {

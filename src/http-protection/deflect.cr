@@ -15,7 +15,8 @@
 #  HTTP::Protection::Deflect.new(interval: 5, duration: 5, threshold: 10, blacklist: ["111.111.111.111"], whitelist: ["222.222.222.222"])
 #
 module HTTP::Protection
-  class Deflect < Base
+  class Deflect
+    include Base
     include HTTP::Handler
 
     def initialize(@interval : Int32 = 5, @duration : Int32 = 900, @threshold : Int32 = 100, @blacklist : Array(String) = [] of String, @whitelist : Array(String) = [] of String)

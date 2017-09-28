@@ -12,7 +12,8 @@
 #  HTTP::Protection::XSSHeader.new(xss_mode: "block" nosniff: true)
 #
 module HTTP::Protection
-  class XSSHeader < Base
+  class XSSHeader
+    include Base
     include HTTP::Handler
 
     def initialize(@xss_mode : String = "block", @nosniff : Bool = true)

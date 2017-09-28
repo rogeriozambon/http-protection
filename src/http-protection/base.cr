@@ -1,5 +1,5 @@
 module HTTP::Protection
-  class Base
+  module Base
     def logger
       Logger.instance
     end
