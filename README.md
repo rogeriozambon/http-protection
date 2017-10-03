@@ -173,19 +173,6 @@ custom_logger = Logger.new(log_file)
 HTTP::Protection::Logger.instance = custom_logger
 ```
 
-## TODO
-
-- [x] Change README to include a description for each middleware.
-- [x] Add documentation for all middlewares.
-
-## Contributing
-
-1. Fork it ( https://github.com/rogeriozambon/http-protection/fork )
-2. Create your feature branch (git checkout -b my-new-feature)
-3. Commit your changes (git commit -am 'Add some feature')
-4. Push to the branch (git push origin my-new-feature)
-5. Create a new Pull Request
-
 ## Contributors
 
 - [rogeriozambon](https://github.com/rogeriozambon) Rogério Zambon - creator, maintainer
