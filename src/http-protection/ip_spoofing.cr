@@ -8,17 +8,18 @@
 #
 module HTTP::Protection
   class IpSpoofing
+    include Base
     include HTTP::Handler
 
     def call(context)
       headers = context.request.headers
 
-      return true unless headers.has_key?("HTTP_X_FORWARDED_FOR")
+      return call_next(context) unless headers.has_key?("X-Forwarded-For")
 
-      ips = headers["HTTP_X_FORWARDED_FOR"].split(/\s*,\s*/)
+      ips = headers["X-Forwarded-For"].split(/\s*,\s*/)
 
-      return false if headers.has_key?("HTTP_CLIENT_IP") && !ips.includes?(headers["HTTP_CLIENT_IP"])
-      return false if headers.has_key?("HTTP_X_REAL_IP") && !ips.includes?(headers["HTTP_X_REAL_IP"])
+      return forbidden(context) if headers.has_key?("X-Client-IP") && !ips.includes?(headers["X-Client-IP"])
+      return forbidden(context) if headers.has_key?("X-Real-IP") && !ips.includes?(headers["X-Real-IP"])
 
       call_next(context)
     end

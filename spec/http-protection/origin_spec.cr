@@ -1,4 +1,4 @@
-require "./spec_helper"
+require "../spec_helper"
 
 describe HTTP::Protection::Origin do
   context = context_for_tests
@@ -10,7 +10,7 @@ describe HTTP::Protection::Origin do
 
   %w(GET HEAD POST PUT DELETE).each do |method|
     it "accepts #{method} requests with no origin" do
-      context.request.headers.add("REQUEST_METHOD", method)
+      context.request.method = method
 
       middleware = HTTP::Protection::Origin.new
       middleware.call(context)
@@ -21,8 +21,8 @@ describe HTTP::Protection::Origin do
 
   %w(GET HEAD).each do |method|
     it "accepts #{method} requests with non-whitelisted origin" do
-      context.request.headers.add("HTTP_ORIGIN", "http://malicious.com")
-      context.request.headers.add("REQUEST_METHOD", method)
+      context.request.headers.add("Origin", "http://malicious.com")
+      context.request.method = method
 
       middleware = HTTP::Protection::Origin.new
       middleware.call(context)
@@ -33,8 +33,8 @@ describe HTTP::Protection::Origin do
 
   %w(POST PUT DELETE).each do |method|
     it "denies #{method} requests with non-whitelisted origin" do
-      context.request.headers.add("HTTP_ORIGIN", "http://malicious.com")
-      context.request.headers.add("REQUEST_METHOD", method)
+      context.request.headers.add("Origin", "http://malicious.com")
+      context.request.method = method
 
       middleware = HTTP::Protection::Origin.new
       middleware.call(context)
@@ -43,8 +43,8 @@ describe HTTP::Protection::Origin do
     end
 
     it "accepts #{method} requests with whitelisted origin" do
-      context.request.headers.add("HTTP_ORIGIN", "http://www.friend.com")
-      context.request.headers.add("REQUEST_METHOD", method)
+      context.request.headers.add("Origin", "http://www.friend.com")
+      context.request.method = method
 
       middleware = HTTP::Protection::Origin.new(whitelist: ["http://www.friend.com"])
       middleware.call(context)

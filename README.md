@@ -27,7 +27,7 @@ server = HTTP::Server.new("0.0.0.0", 8080, [
   HTTP::Protection::IpSpoofing.new,
   HTTP::Protection::Origin.new,
   HTTP::Protection::PathTraversal.new,
-  HTTP::Protection::RemoteReferrer.new,
+  HTTP::Protection::RemoteReferer.new,
   HTTP::Protection::StrictTransport.new,
   HTTP::Protection::XSSHeader.new
 ])
@@ -107,7 +107,7 @@ It protects against unauthorized access to file system attacks, unescapes '/' an
 HTTP::Protection::PathTraversal.new
 ```
 
-### RemoteReferrer middleware
+### RemoteReferer middleware
 
 It doesn't accept unsafe HTTP requests if the Referer header is set to a different host. You can define the HTTP methods that are allowed.
 
@@ -118,7 +118,7 @@ methods | Defines which HTTP method should be used. | GET, HEAD, OPTIONS, TRACE 
 **Example:**
 
 ```crystal
-HTTP::Protection::RemoteReferrer.new(methods: ["GET"])
+HTTP::Protection::RemoteReferer.new(methods: ["GET"])
 ```
 
 ### StrictTransport middleware

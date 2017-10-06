@@ -1,5 +1,4 @@
-require "./spec_helper"
-require "http/client"
+require "../spec_helper"
 
 describe HTTP::Protection::XSSHeader do
   context = context_for_tests

@@ -8,10 +8,10 @@
 #
 # === Examples:
 #
-#  HTTP::Protection::RemoteReferrer.new(methods: ["GET"])
+#  HTTP::Protection::RemoteReferer.new(methods: ["GET"])
 #
 module HTTP::Protection
-  class RemoteReferrer
+  class RemoteReferer
     include Base
     include HTTP::Handler
 
@@ -21,12 +21,12 @@ module HTTP::Protection
     def call(context)
       headers = context.request.headers
 
-      return call_next(context) unless headers.has_key?("HTTP_REFERER")
+      return call_next(context) unless headers.has_key?("Referer")
 
-      referrer = headers["HTTP_REFERER"]
+      referer = headers["Referer"]
 
-      return false unless referrer.empty? || safe?(context)
-      return false unless URI.parse(referrer).host == context.request.host
+      return forbidden(context) unless referer.empty? || safe?(context)
+      return forbidden(context) unless URI.parse(referer).host == context.request.host
 
       call_next(context)
     end

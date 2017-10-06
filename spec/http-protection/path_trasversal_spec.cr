@@ -1,4 +1,4 @@
-require "./spec_helper"
+require "../spec_helper"
 
 describe HTTP::Protection::PathTraversal do
   context = context_for_tests

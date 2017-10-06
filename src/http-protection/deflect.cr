@@ -29,10 +29,7 @@ module HTTP::Protection
     def call(context)
       return call_next(context) unless deflect?(context)
 
-      context.response.headers["Content-Type"] = "text/plain"
-      context.response.headers["Content-Length"] = "0"
-      context.response.status_code = 403
-      context.response.close
+      forbidden(context)
     end
 
     private def deflect?(context)
