@@ -169,8 +169,7 @@ It's possible to add a custom logger to replace the default behavior. You can ad
 
 ```crystal
 log_file = File.open("./protection.log", "w")
-custom_logger = Logger.new(log_file)
-HTTP::Protection::Logger.instance = custom_logger
+HTTP::Protection::Logger.instance = Logger.new(log_file)
 ```
 
 ## Contributors
