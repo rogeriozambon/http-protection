@@ -10,7 +10,7 @@ module HTTP::Protection
   class PathTraversal
     include HTTP::Handler
 
-    def call(context)
+    def call(context : HTTP::Server::Context)
       path = context.request.headers["PATH_INFO"] rescue ""
       context.request.headers["PATH_INFO"] = cleanup(path)
 

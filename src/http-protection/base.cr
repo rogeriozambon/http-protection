@@ -7,7 +7,6 @@ module HTTP::Protection
     def html?(context)
       content_types = [
         "text/html",
-        "text/html;charset=utf-8",
         "application/xhtml",
         "application/xhtml+xml",
       ]

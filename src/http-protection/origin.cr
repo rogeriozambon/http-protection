@@ -24,7 +24,7 @@ module HTTP::Protection
     def initialize(@whitelist : Array(String) = [] of String)
     end
 
-    def call(context)
+    def call(context : HTTP::Server::Context)
       return call_next(context) if accepts?(context)
 
       logger.warn("origin '#{origin(context)}' unauthorized ")

@@ -19,7 +19,7 @@ module HTTP::Protection
     def initialize(@xss_mode : String = "block", @nosniff : Bool = true)
     end
 
-    def call(context)
+    def call(context : HTTP::Server::Context)
       xss_value = context.request.headers["X-XSS-Protection"] rescue nil
       content_options = context.request.headers["X-Content-Type-Options"] rescue nil
 

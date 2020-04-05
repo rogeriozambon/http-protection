@@ -18,7 +18,7 @@ module HTTP::Protection
     def initialize(@option : String = "SAMEORIGIN")
     end
 
-    def call(context)
+    def call(context : HTTP::Server::Context)
       context.response.headers["X-Frame-Options"] ||= @option if html?(context)
       call_next(context)
     end

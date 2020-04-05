@@ -18,7 +18,7 @@ module HTTP::Protection
     def initialize(@methods : Array(String) = ["GET", "HEAD", "OPTIONS", "TRACE"])
     end
 
-    def call(context)
+    def call(context : HTTP::Server::Context)
       headers = context.request.headers
 
       return call_next(context) unless headers.has_key?("Referer")

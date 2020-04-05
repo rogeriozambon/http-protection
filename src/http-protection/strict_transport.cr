@@ -19,7 +19,7 @@ module HTTP::Protection
     def initialize(@max_age : Int32 = 31536000, @include_subdomains : Bool = false, @preload : Bool = false)
     end
 
-    def call(context)
+    def call(context : HTTP::Server::Context)
       context.response.headers["Strict-Transport-Security"] ||= strict_transport
       call_next(context)
     end

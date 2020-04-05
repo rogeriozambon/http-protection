@@ -26,7 +26,7 @@ module HTTP::Protection
       @remote = ""
     end
 
-    def call(context)
+    def call(context : HTTP::Server::Context)
       return call_next(context) unless deflect?(context)
 
       forbidden(context)
@@ -43,7 +43,7 @@ module HTTP::Protection
 
     private def map
       @mapper[@remote] ||= {
-        "expires"  => Time.epoch(Time.now.epoch + @interval).epoch_ms,
+        "expires"  => Time.utc.to_unix + @interval,
         "requests" => 0,
       }
     end
@@ -69,7 +69,7 @@ module HTTP::Protection
     private def block!
       return if blocked?
 
-      map["block_expires"] = Time.epoch(Time.now.epoch + @duration).epoch_ms
+      map["block_expires"] = Time.utc.to_unix + @duration
 
       logger.warn("#{@remote} blocked")
     end
@@ -87,7 +87,7 @@ module HTTP::Protection
     end
 
     private def block_expired?
-      map["block_expires"] < Time.now.epoch_ms rescue false
+      map["block_expires"] < Time.utc.to_unix rescue false
     end
 
     private def watching?
@@ -99,7 +99,7 @@ module HTTP::Protection
     end
 
     private def watch_expired?
-      map["expires"] <= Time.now.epoch_ms
+      map["expires"] <= Time.utc.to_unix
     end
 
     private def exceeded_request_threshold?
