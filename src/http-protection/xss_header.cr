@@ -33,6 +33,7 @@ module HTTP::Protection
 
       context.response.headers["X-XSS-Protection"] = xss_value if xss_value
       context.response.headers["X-Content-Type-Options"] = content_options if content_options
+      call_next(context)
     end
   end
 end
