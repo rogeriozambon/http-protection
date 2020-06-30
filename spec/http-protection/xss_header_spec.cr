@@ -38,7 +38,9 @@ describe HTTP::Protection::XSSHeader do
   it "should allow changing the protection mode" do
     context.request.headers.add("Content-Type", "application/xhtml")
 
-    HTTP::Protection::XSSHeader.new(xss_mode: "foo").call(context)
+    middleware = HTTP::Protection::XSSHeader.new(xss_mode: "foo")
+    middleware.next = ->(ctx : HTTP::Server::Context) { called = true }
+    middleware.call(context)
 
     headers = context.response.headers
     headers["X-XSS-Protection"].should eq("1; mode=foo")
@@ -73,7 +75,9 @@ describe HTTP::Protection::XSSHeader do
   it "should allow changing the nosniff-mode off" do
     context.request.headers.add("Content-Type", "text/html")
 
-    HTTP::Protection::XSSHeader.new(nosniff: false).call(context)
+    middleware = HTTP::Protection::XSSHeader.new(nosniff: false)
+    middleware.next = ->(ctx : HTTP::Server::Context) { called = true }
+    middleware.call(context)
 
     headers = context.response.headers
     headers.has_key?("X-Content-Type-Options").should be_false
