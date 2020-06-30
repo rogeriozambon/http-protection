@@ -27,7 +27,7 @@ module HTTP::Protection
     def call(context : HTTP::Server::Context)
       return call_next(context) if accepts?(context)
 
-      logger.warn("origin '#{origin(context)}' unauthorized ")
+      logger.warn { "origin '#{origin(context)}' unauthorized" }
 
       forbidden(context)
     end

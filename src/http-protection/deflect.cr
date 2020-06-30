@@ -71,7 +71,7 @@ module HTTP::Protection
 
       map["block_expires"] = Time.utc.to_unix + @duration
 
-      logger.warn("#{@remote} blocked")
+      logger.warn { "#{@remote} blocked" }
     end
 
     private def clear!
@@ -79,7 +79,7 @@ module HTTP::Protection
 
       @mapper.delete(@remote)
 
-      logger.warn("#{@remote} released") if blocked?
+      logger.warn { "#{@remote} released" } if blocked?
     end
 
     private def blocked?
