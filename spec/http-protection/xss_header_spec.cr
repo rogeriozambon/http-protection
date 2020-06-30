@@ -2,7 +2,9 @@ require "../spec_helper"
 
 describe HTTP::Protection::XSSHeader do
   context = context_for_tests
+
   middleware = HTTP::Protection::XSSHeader.new
+  middleware.next = ->(ctx : HTTP::Server::Context) { called = true }
 
   Spec.before_each do
     context.request.headers.clear

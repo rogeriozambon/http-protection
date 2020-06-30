@@ -10,6 +10,7 @@ describe HTTP::Protection::StrictTransport do
 
   it "should set the Strict-Transport-Security header" do
     middleware = HTTP::Protection::StrictTransport.new
+    middleware.next = ->(ctx : HTTP::Server::Context) { called = true }
     middleware.call(context)
 
     context.response.headers["Strict-Transport-Security"].should eq("max-age=31536000")
@@ -17,6 +18,7 @@ describe HTTP::Protection::StrictTransport do
 
   it "should allow changing the max-age option" do
     middleware = HTTP::Protection::StrictTransport.new(max_age: 16070400)
+    middleware.next = ->(ctx : HTTP::Server::Context) { called = true }
     middleware.call(context)
 
     context.response.headers["Strict-Transport-Security"].should eq("max-age=16070400")
@@ -24,6 +26,7 @@ describe HTTP::Protection::StrictTransport do
 
   it "should allow switching on the include_subdomains option" do
     middleware = HTTP::Protection::StrictTransport.new(include_subdomains: true)
+    middleware.next = ->(ctx : HTTP::Server::Context) { called = true }
     middleware.call(context)
 
     context.response.headers["Strict-Transport-Security"].should eq("max-age=31536000; includeSubDomains")
@@ -31,6 +34,7 @@ describe HTTP::Protection::StrictTransport do
 
   it "should allow switching on the preload option" do
     middleware = HTTP::Protection::StrictTransport.new(preload: true)
+    middleware.next = ->(ctx : HTTP::Server::Context) { called = true }
     middleware.call(context)
 
     context.response.headers["Strict-Transport-Security"].should eq("max-age=31536000; preload")
@@ -38,6 +42,7 @@ describe HTTP::Protection::StrictTransport do
 
   it "should allow switching on all the options" do
     middleware = HTTP::Protection::StrictTransport.new(include_subdomains: true, preload: true)
+    middleware.next = ->(ctx : HTTP::Server::Context) { called = true }
     middleware.call(context)
 
     context.response.headers["Strict-Transport-Security"].should eq("max-age=31536000; includeSubDomains; preload")

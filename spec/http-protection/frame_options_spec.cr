@@ -12,6 +12,7 @@ describe HTTP::Protection::FrameOptions do
     context.request.headers.add("Content-Type", "text/html")
 
     middleware = HTTP::Protection::FrameOptions.new
+    middleware.next = ->(ctx : HTTP::Server::Context) { called = true }
     middleware.call(context)
 
     context.response.headers["X-Frame-Options"].should eq("SAMEORIGIN")
@@ -19,6 +20,7 @@ describe HTTP::Protection::FrameOptions do
 
   it "should not set the X-Frame-Options for other content types" do
     middleware = HTTP::Protection::FrameOptions.new
+    middleware.next = ->(ctx : HTTP::Server::Context) { called = true }
     middleware.call(context)
 
     context.response.headers.has_key?("X-Frame-Options").should be_false
@@ -28,6 +30,7 @@ describe HTTP::Protection::FrameOptions do
     context.request.headers.add("Content-Type", "text/html")
 
     middleware = HTTP::Protection::FrameOptions.new(option: "DENY")
+    middleware.next = ->(ctx : HTTP::Server::Context) { called = true }
     middleware.call(context)
 
     context.response.headers["X-Frame-Options"].should eq("DENY")
@@ -37,6 +40,7 @@ describe HTTP::Protection::FrameOptions do
     context.request.headers.add("Content-Type", "text/html")
 
     middleware = HTTP::Protection::FrameOptions.new(option: "ALLOW-FROM foo")
+    middleware.next = ->(ctx : HTTP::Server::Context) { called = true }
     middleware.call(context)
 
     context.response.headers["X-Frame-Options"].should eq("ALLOW-FROM foo")
@@ -47,6 +51,7 @@ describe HTTP::Protection::FrameOptions do
     context.response.headers["X-Frame-Options"] = "allow"
 
     middleware = HTTP::Protection::FrameOptions.new
+    middleware.next = ->(ctx : HTTP::Server::Context) { called = true }
     middleware.call(context)
 
     context.response.headers["X-Frame-Options"].should eq("allow")
