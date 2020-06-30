@@ -2,7 +2,7 @@ require "spec"
 require "timecop"
 require "../src/http-protection"
 
-HTTP::Protection::Logger.instance = Logger.new(IO::Memory.new)
+HTTP::Protection::Logger.instance = Log.new(source: "http.protection", backend: Log::MemoryBackend.new, level: :warn)
 
 def context_for_tests : HTTP::Server::Context
   HTTP::Server::Context.new(
