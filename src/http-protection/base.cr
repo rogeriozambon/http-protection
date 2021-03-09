@@ -22,15 +22,15 @@ module HTTP::Protection
       headers.fetch("Origin") { nil } || headers.fetch("HTTP_ORIGIN") { nil } || headers.fetch("HTTP_X_ORIGIN") { nil }
     end
 
-    def safe?(context)
-      methods = [
-        "GET",
-        "HEAD",
-        "OPTIONS",
-        "TRACE",
-      ]
+    SAFE_METHODS = [
+      "GET",
+      "HEAD",
+      "OPTIONS",
+      "TRACE",
+    ]
 
-      methods.includes?(context.request.method)
+    def safe?(context)
+      SAFE_METHODS.includes?(context.request.method)
     rescue
       false
     end
