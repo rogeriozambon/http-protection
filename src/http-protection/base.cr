@@ -4,11 +4,7 @@ module HTTP::Protection
       Logger.instance
     end
 
-    HTML_CONTENT_TYPES = [
-      "text/html",
-      "application/xhtml",
-      "application/xhtml+xml",
-    ]
+    HTML_CONTENT_TYPES = %w[text/html application/xhtml]
 
     def html?(context)
       content_type = context.request.headers["Content-Type"]
@@ -22,12 +18,7 @@ module HTTP::Protection
       headers.fetch("Origin") { nil } || headers.fetch("HTTP_ORIGIN") { nil } || headers.fetch("HTTP_X_ORIGIN") { nil }
     end
 
-    SAFE_METHODS = [
-      "GET",
-      "HEAD",
-      "OPTIONS",
-      "TRACE",
-    ]
+    SAFE_METHODS = %w[GET HEAD OPTIONS TRACE]
 
     def safe?(context)
       SAFE_METHODS.includes?(context.request.method)
