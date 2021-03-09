@@ -56,4 +56,14 @@ describe HTTP::Protection::FrameOptions do
 
     context.response.headers["X-Frame-Options"].should eq("allow")
   end
+
+  it "should set the X-Frame-Options also when charset is specified" do
+    context.request.headers.add("Content-Type", "text/html;charset=utf-8")
+
+    middleware = HTTP::Protection::FrameOptions.new
+    middleware.next = ->(ctx : HTTP::Server::Context) { called = true }
+    middleware.call(context)
+
+    context.response.headers["X-Frame-Options"].should eq("SAMEORIGIN")
+  end
 end
