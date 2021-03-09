@@ -4,14 +4,15 @@ module HTTP::Protection
       Logger.instance
     end
 
-    def html?(context)
-      content_types = [
-        "text/html",
-        "application/xhtml",
-        "application/xhtml+xml",
-      ]
+    HTML_CONTENT_TYPES = [
+      "text/html",
+      "application/xhtml",
+      "application/xhtml+xml",
+    ]
 
-      content_types.includes?(context.request.headers["Content-Type"])
+    def html?(context)
+      content_type = context.request.headers["Content-Type"]
+      HTML_CONTENT_TYPES.any? { |ct| content_type.starts_with? ct }
     rescue
       false
     end
