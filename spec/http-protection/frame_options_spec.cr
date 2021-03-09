@@ -9,7 +9,7 @@ describe HTTP::Protection::FrameOptions do
   end
 
   it "should set the X-Frame-Options" do
-    context.request.headers.add("Content-Type", "text/html")
+    context.response.headers.add("Content-Type", "text/html")
 
     middleware = HTTP::Protection::FrameOptions.new
     middleware.next = ->(ctx : HTTP::Server::Context) { called = true }
@@ -27,7 +27,7 @@ describe HTTP::Protection::FrameOptions do
   end
 
   it "should allow changing the protection mode" do
-    context.request.headers.add("Content-Type", "text/html")
+    context.response.headers.add("Content-Type", "text/html")
 
     middleware = HTTP::Protection::FrameOptions.new(option: "DENY")
     middleware.next = ->(ctx : HTTP::Server::Context) { called = true }
@@ -37,7 +37,7 @@ describe HTTP::Protection::FrameOptions do
   end
 
   it "should allow changing the protection mode to a string" do
-    context.request.headers.add("Content-Type", "text/html")
+    context.response.headers.add("Content-Type", "text/html")
 
     middleware = HTTP::Protection::FrameOptions.new(option: "ALLOW-FROM foo")
     middleware.next = ->(ctx : HTTP::Server::Context) { called = true }
@@ -47,7 +47,7 @@ describe HTTP::Protection::FrameOptions do
   end
 
   it "should not override the header if already set" do
-    context.request.headers.add("Content-Type", "text/html")
+    context.response.headers.add("Content-Type", "text/html")
     context.response.headers["X-Frame-Options"] = "allow"
 
     middleware = HTTP::Protection::FrameOptions.new
@@ -58,7 +58,7 @@ describe HTTP::Protection::FrameOptions do
   end
 
   it "should set the X-Frame-Options also when charset is specified" do
-    context.request.headers.add("Content-Type", "text/html;charset=utf-8")
+    context.response.headers.add("Content-Type", "text/html;charset=utf-8")
 
     middleware = HTTP::Protection::FrameOptions.new
     middleware.next = ->(ctx : HTTP::Server::Context) { called = true }

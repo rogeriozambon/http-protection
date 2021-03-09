@@ -12,7 +12,7 @@ describe HTTP::Protection::XSSHeader do
   end
 
   it "should set the X-XSS-Protection" do
-    context.request.headers.add("Content-Type", "text/html")
+    context.response.headers.add("Content-Type", "text/html")
     middleware.call(context)
 
     headers = context.response.headers
@@ -20,7 +20,7 @@ describe HTTP::Protection::XSSHeader do
   end
 
   it "should set the X-XSS-Protection for XHTML" do
-    context.request.headers.add("Content-Type", "application/xhtml+xml")
+    context.response.headers.add("Content-Type", "application/xhtml+xml")
     middleware.call(context)
 
     headers = context.response.headers
@@ -28,7 +28,7 @@ describe HTTP::Protection::XSSHeader do
   end
 
   it "should not set the X-XSS-Protection for other content types" do
-    context.request.headers.add("Content-Type", "application/foo")
+    context.response.headers.add("Content-Type", "application/foo")
     middleware.call(context)
 
     headers = context.response.headers
@@ -36,7 +36,7 @@ describe HTTP::Protection::XSSHeader do
   end
 
   it "should allow changing the protection mode" do
-    context.request.headers.add("Content-Type", "application/xhtml")
+    context.response.headers.add("Content-Type", "application/xhtml")
 
     middleware = HTTP::Protection::XSSHeader.new(xss_mode: "foo")
     middleware.next = ->(ctx : HTTP::Server::Context) { called = true }
@@ -47,7 +47,7 @@ describe HTTP::Protection::XSSHeader do
   end
 
   it "should not override the header if already set" do
-    context.request.headers.add("Content-Type", "text/html")
+    context.response.headers.add("Content-Type", "text/html")
     context.request.headers.add("X-XSS-Protection", "0")
 
     middleware.call(context)
@@ -57,7 +57,7 @@ describe HTTP::Protection::XSSHeader do
   end
 
   it "should set the X-Content-Type-Options" do
-    context.request.headers.add("Content-Type", "text/html")
+    context.response.headers.add("Content-Type", "text/html")
     middleware.call(context)
 
     headers = context.response.headers
@@ -65,7 +65,7 @@ describe HTTP::Protection::XSSHeader do
   end
 
   it "should set the X-Content-Type-Options for other content types" do
-    context.request.headers.add("Content-Type", "application/foo")
+    context.response.headers.add("Content-Type", "application/foo")
     middleware.call(context)
 
     headers = context.response.headers
@@ -73,7 +73,7 @@ describe HTTP::Protection::XSSHeader do
   end
 
   it "should allow changing the nosniff-mode off" do
-    context.request.headers.add("Content-Type", "text/html")
+    context.response.headers.add("Content-Type", "text/html")
 
     middleware = HTTP::Protection::XSSHeader.new(nosniff: false)
     middleware.next = ->(ctx : HTTP::Server::Context) { called = true }
@@ -84,7 +84,7 @@ describe HTTP::Protection::XSSHeader do
   end
 
   it "should not override the header if already set X-Content-Type-Options" do
-    context.request.headers.add("Content-Type", "text/html")
+    context.response.headers.add("Content-Type", "text/html")
     context.request.headers.add("X-Content-Type-Options", "sniff")
 
     middleware.call(context)

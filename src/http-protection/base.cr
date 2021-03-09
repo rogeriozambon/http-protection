@@ -7,7 +7,7 @@ module HTTP::Protection
     HTML_CONTENT_TYPES = %w[text/html application/xhtml]
 
     def html?(context)
-      content_type = context.request.headers["Content-Type"]
+      content_type = context.response.headers["Content-Type"]
       HTML_CONTENT_TYPES.any? { |ct| content_type.starts_with? ct }
     rescue
       false

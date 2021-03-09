@@ -19,8 +19,8 @@ module HTTP::Protection
     end
 
     def call(context : HTTP::Server::Context)
-      context.response.headers["X-Frame-Options"] ||= @option if html?(context)
       call_next(context)
+      context.response.headers["X-Frame-Options"] ||= @option if html?(context)
     end
   end
 end
