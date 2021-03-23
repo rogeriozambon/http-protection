@@ -26,7 +26,7 @@ module HTTP::Protection
       referer = headers["Referer"]
 
       return forbidden(context) unless referer.empty? || safe?(context)
-      return forbidden(context) unless URI.parse(referer).host == context.request.host
+      return forbidden(context) unless URI.parse(referer).host == context.request.hostname
 
       call_next(context)
     end
